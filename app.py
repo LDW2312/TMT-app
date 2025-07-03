@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
-import csv
-import os
 from flask_cors import CORS
+from google.oauth2.service_account import Credentials
+import gspread
 
 app = Flask(__name__)
 CORS(app)
@@ -15,11 +15,20 @@ FIELDNAMES = [
     "device_type", "screen_resolution", "completion_status", "test_type", "click_log"
 ]
 
-# Ensure CSV header
-if not os.path.exists(DATA_FILE):
-    with open(DATA_FILE, mode="w", newline="", encoding="utf-8-sig") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
-        writer.writeheader()
+def save_to_google_sheets(data):
+    creds = Credentials.from_service_account_file("credentials.json", scopes=["https://www.googleapis.com/auth/spreadsheets"])
+    gc = gspread.authorize(creds)
+    sh = gc.open("TMT_B_Results")  # 시트 이름
+    ws = sh.sheet1
+
+    row = [
+        data["timestamp"], data["name"], data["phone"], data["time_taken"], data["error_count"],
+        data["reaction_time"], data["total_clicks"], data["accuracy"], data["first_click_time"],
+        data["reaction_trigger_step"], data["reaction_success"], data["total_buttons"], data["first_error_position"],
+        data["device_type"], data["screen_resolution"], data["completion_status"], data["test_type"],
+        str(data["click_log"])
+    ]
+    ws.append_row(row)
 
 @app.route("/")
 def index():
@@ -31,12 +40,5 @@ def submit():
     data["timestamp"] = datetime.utcnow().isoformat()
     data["test_type"] = "TMT-B"
     data["completion_status"] = "completed"
-
-    with open(DATA_FILE, mode="a", newline="", encoding="utf-8-sig") as f:
-        writer = csv.DictWriter(f, fieldnames=FIELDNAMES)
-        writer.writerow(data)
-
+    save_to_google_sheets(data)
     return jsonify({"status": "success"})
-
-if __name__ == "__main__":
-    app.run(debug=True)
