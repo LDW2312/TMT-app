@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>주의력 검사 - 순서 연결</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+	<h1>주의력 검사 - 순서 연결</h1>
+	<p style="font-size: 0.9em; color: #777;">Trail Making Test (Part B)</p>
+	<p id="user-info"></p>
+	<div id="tmt-area" class="tmt-box"></div>
+	<p id="status" class="status-text"></p>
+
+	<!-- 사용자 정보 입력 모달 -->
+	<div id="user-modal" class="modal">
+		<div class="modal-content">
+			<h2>사용자 정보 입력</h2>
+			<label for="name-input">이름:</label>
+			<input type="text" id="name-input" placeholder="홍길동" />
+			<label for="phone-input">전화번호 끝 4자리:</label>
+			<input type="text" id="phone-input" maxlength="4" placeholder="1234" />
+			<button id="submit-btn">시작하기</button>
+		</div>
+	</div>
+
+	<script src="{{ url_for('static', filename='js/tmt.js') }}"></script>
+</body>
+</html>
