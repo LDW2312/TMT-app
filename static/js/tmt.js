@@ -233,10 +233,23 @@ document.addEventListener("DOMContentLoaded", () => {
 			click_log: clickLog
 		};
 
+		console.log("📤 sendResult 호출됨");
+
+		console.log("📦 payload 내용:", payload);
+
 		fetch('/submit', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload)
+		})
+		.then(response => {
+			console.log("✅ 서버 응답 상태:", response.status);
+			if (!response.ok) {
+				console.error("❌ 서버 오류:", response.statusText);
+			}
+		})
+		.catch(error => {
+			console.error("❌ 요청 실패:", error);
 		});
 	}
 	document.getElementById("close-result-btn").onclick = () => {

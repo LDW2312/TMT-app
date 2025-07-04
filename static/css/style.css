@@ -59,14 +59,15 @@ h1 {
 }
 .modal-content {
 	background-color: #fff;
-	margin: 20% auto;
-	padding: 20px;
+	margin: 15% auto;
+	padding: 16px;
 	border: 1px solid #888;
-	width: 90vw; /* 더 유동적인 가로 폭 */
-	max-width: 400px;
+	width: 80vw; /* 더 유동적인 가로 폭 */
+	max-width: 320px;
 	border-radius: 10px;
 	text-align: left;
 	box-sizing: border-box;
+	font-size: 14px;
 }
 .modal-content h2 {
 	text-align: center;
