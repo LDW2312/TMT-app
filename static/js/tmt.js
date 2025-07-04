@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				document.getElementById("result-text").innerText = interpretation;
 				document.getElementById("result-modal").style.display = "block";
 
-				sendResult(timeTaken.toFixed(2));
+				sendResult(timeTaken);
 			}
 		}
 	}
