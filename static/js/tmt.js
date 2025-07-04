@@ -10,17 +10,29 @@ document.addEventListener("DOMContentLoaded", () => {
 	const userInfo = document.getElementById("user-info");
 	const submitBtn = document.getElementById("submit-btn");
 
+	// 처음 실행 시, 사용자에게 초기 설명을 보여주는 부분
+	const introScreen = document.getElementById("intro-screen");
+	const startTestBtn = document.getElementById("start-test-btn");
+	startTestBtn.onclick = () => {
+		// 초기 설명 모달 숨김
+		introScreen.style.display = "none";
+		// 사용자 정보 입력 팝업 표시
+		document.getElementById("user-modal").style.display = "block";
+	};
+
+	// 사용자 정보 입력 후 테스트 시작
 	submitBtn.onclick = () => {
 		const name = document.getElementById("name-input").value.trim();
 		const phone = document.getElementById("phone-input").value.trim();
 		const age = parseInt(document.getElementById("age-input").value.trim());
 		if (!name || !phone || phone.length !== 4 || isNaN(age)) {
-		alert("이름, 나이, 전화번호를 모두 정확히 입력해주세요.");
-		return;
-	}
+			alert("이름, 나이, 전화번호를 모두 정확히 입력해주세요.");
+			return;
+		}
 		userName = name;
 		userAge = age;
 		userPhone = `#${phone.padStart(4, "0")}`;
+		// 사용자 정보 입력 팝업 숨김
 		document.getElementById("user-modal").style.display = "none";
 		userInfo.innerText = `👤 ${userName} / 🎂 ${userAge}세 / 📱 010-****-${phone}`;
 		resetTest();
@@ -162,7 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 
 			if (current === sequence.length) {
-				const timeTaken = ((Date.now() - startTime) / 1000).toFixed(2);
+				const timeTaken = ((Date.now() - startTime) / 1000); // 숫자형 그대로
+				const timeTakenRounded = parseFloat(timeTaken).toFixed(2);
 				
 				// 결과 해석
 				const interpretation = interpretResult(userAge, parseFloat(timeTaken));
@@ -171,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				document.getElementById("result-text").innerText = interpretation;
 				document.getElementById("result-modal").style.display = "block";
 
-				sendResult(timeTaken);
+				sendResult(timeTakenRounded);
 			}
 		}
 	}
@@ -236,24 +249,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			click_log: clickLog
 		};
 
-		console.log("📤 sendResult 호출됨");
-
-		console.log("📦 payload 내용:", payload);
-
 		fetch('/submit', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload)
 		})
-		.then(response => {
-			console.log("✅ 서버 응답 상태:", response.status);
-			if (!response.ok) {
-				console.error("❌ 서버 오류:", response.statusText);
-			}
-		})
-		.catch(error => {
-			console.error("❌ 요청 실패:", error);
-		});
 	}
 	document.getElementById("close-result-btn").onclick = () => {
 		location.reload();  // 페이지 새로고침으로 테스트 초기화

@@ -101,6 +101,7 @@ h1 {
 .modal-content button:hover {
 	background-color: #45a049;
 }
+
 /* 모바일 화면 대응 */
 @media screen and (max-width: 400px) {
 	.modal-content {

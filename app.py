@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_cors import CORS
 import json
 import os
@@ -54,7 +54,8 @@ def index():
 @app.route("/submit", methods=["POST"])
 def submit():
     data = request.get_json()
-    data["timestamp"] = datetime.utcnow().isoformat()
+    kst = datetime.utcnow() + timedelta(hours=9)
+    data["timestamp"] = kst.strftime("%Y-%m-%d %H:%M:%S")
     data["test_type"] = "TMT-B"
     data["completion_status"] = "completed"
     save_to_google_sheets(data)
