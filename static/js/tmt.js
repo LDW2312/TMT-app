@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		userAge = age;
 		userPhone = `#${phone.padStart(4, "0")}`;
 		document.getElementById("user-modal").style.display = "none";
-		userInfo.innerText = `👤 ${userName} / 📱 010-****-${phone}`;
+		userInfo.innerText = `👤 ${userName} / 🎂 ${userName}세 / 📱 010-****-${phone}`;
 		resetTest();
 	};
 
@@ -121,8 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		else result = "⚠️ 수행 시간이 길어 주의가 필요합니다.";
 
 		return `🧠 연령대: ${match.min}~${match.max}세 기준  
-	🕒 수행 시간: ${timeTaken.toFixed(1)}초  
-	📊 기준 평균: ${match.avg.toFixed(1)}초 / 허용 상한: ${threshold.toFixed(1)}초  
+				🕒 수행 시간: ${timeTaken.toFixed(2)}초  
+				📊 연령대 평균: ${match.avg.toFixed(2)}초 / 허용 상한: ${threshold.toFixed(2)}초  
 	${result}`;
 	}
 
@@ -174,15 +174,12 @@ document.addEventListener("DOMContentLoaded", () => {
 				subtitle.style.padding = "6px";
 				subtitle.style.borderRadius = "6px";
 
-				const interpretation = interpretResult(userAge, timeTaken);
+				// 결과 해석
+				const interpretation = interpretResult(userAge, parseFloat(timeTaken));
 
-				const resultBox = document.getElementById("result-message");
-				if (resultBox) {
-					resultBox.innerText = interpretation;
-					resultBox.style.color = "#336699";  // 진한 파랑 계열 강조
-					resultBox.style.fontWeight = "bold";
-					resultBox.style.whiteSpace = "pre-line"; // 줄바꿈 허용
-				}
+				// 팝업에 해석 텍스트 표시
+				document.getElementById("result-text").innerText = interpretation;
+				document.getElementById("result-modal").style.display = "block";
 
 				sendResult(timeTaken.toFixed(2));
 			}
@@ -254,4 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			body: JSON.stringify(payload)
 		});
 	}
+	document.getElementById("close-result-btn").onclick = () => {
+		location.reload();  // 페이지 새로고침으로 테스트 초기화
+	};
 });

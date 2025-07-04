@@ -30,12 +30,6 @@ h1 {
 	border-radius: 10px;
 	overflow: hidden;
 }
-#result-message {
-	margin-top: 12px;
-	padding: 8px;
-	border-top: 1px solid #ccc;
-	font-size: 16px;
-}
 .circle-btn {
 	position: absolute;
 	border-radius: 50%;

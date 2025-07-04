@@ -10,9 +10,7 @@
 	<h1>주의력 검사 - 순서 연결</h1>
 	<p id="subtitle" style="font-size: 0.9em; color: #777;">Trail Making Test (Part B)</p>
 	<p id="user-info"></p>
-	<div id="tmt-area" class="tmt-box">
-		<div id="result-message" class="status-text"></div>
-	</div>
+	<div id="tmt-area" class="tmt-box"></div>
 	<p id="status" class="status-text"></p>
 
 	<!-- 사용자 정보 입력 모달 -->
@@ -23,6 +21,15 @@
 			<label>나이: <input type="number" id="age-input" min="20" max="80" /></label><br/>
 			<label>전화번호 끝 4자리: <input type="text" id="phone-input" maxlength="4" /></label><br/>
 			<button id="submit-btn">시작</button>
+		</div>
+	</div>
+
+	<!-- 검사 결과 팝업 모달 -->
+	<div id="result-modal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<h3>🧠 검사 결과</h3>
+			<p id="result-text" style="white-space: pre-line;"></p>
+			<button id="close-result-btn">확인</button>
 		</div>
 	</div>
 
