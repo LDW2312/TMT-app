@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 				// 부제목 위치에 한 줄 결과 표시
 				const subtitle = document.getElementById("subtitle");
-				subtitle.innerText = `✅ 완료! 시간: ${time}초 / 오류: ${errors}회 / 반응속도: ${reactionTime || '미응답'}ms`;
+				subtitle.innerText = `✅ 완료! 시간: ${timeTaken}초 / 오류: ${errors}회 / 반응속도: ${reactionTime || '미응답'}ms`;
 				subtitle.style.color = "#1976d2";  // 파란색 강조
 				subtitle.style.fontSize = "1.2em";
 				subtitle.style.fontWeight = "bold";
@@ -174,14 +174,15 @@ document.addEventListener("DOMContentLoaded", () => {
 				subtitle.style.padding = "6px";
 				subtitle.style.borderRadius = "6px";
 
-				sendResult(timeTaken);
-
 				const interpretation = interpretResult(userAge, timeTaken);
 
-				status.innerText = interpretation;
-				status.style.color = "#336699";  // 진한 파랑 계열 강조
-				status.style.fontWeight = "bold";
-				status.style.whiteSpace = "pre-line"; // 줄바꿈 허용
+				const resultBox = document.getElementById("result-message");
+				if (resultBox) {
+					resultBox.innerText = interpretation;
+					resultBox.style.color = "#336699";  // 진한 파랑 계열 강조
+					resultBox.style.fontWeight = "bold";
+					resultBox.style.whiteSpace = "pre-line"; // 줄바꿈 허용
+				}
 
 				sendResult(timeTaken.toFixed(2));
 			}
