@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		userAge = age;
 		userPhone = `#${phone.padStart(4, "0")}`;
 		document.getElementById("user-modal").style.display = "none";
-		userInfo.innerText = `👤 ${userName} / 🎂 ${userName}세 / 📱 010-****-${phone}`;
+		userInfo.innerText = `👤 ${userName} / 🎂 ${userAge}세 / 📱 010-****-${phone}`;
 		resetTest();
 	};
 

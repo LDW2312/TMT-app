@@ -59,7 +59,7 @@ h1 {
 }
 .modal-content {
 	background-color: #fff;
-	margin: 10% auto;
+	margin: 20% auto;
 	padding: 20px;
 	border: 1px solid #888;
 	width: 90vw; /* 더 유동적인 가로 폭 */
