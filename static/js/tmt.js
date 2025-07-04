@@ -5,22 +5,20 @@ let userName = "", userPhone = "";
 let clickLog = [], correctClicks = 0, reactionTriggerIndex = null, userAge = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-	document.getElementById("go-next-btn").onclick = () => {
-		document.getElementById("intro-section").style.display = "none";
-		document.getElementById("user-modal").style.display = "block";
-	};
 	const area = document.getElementById("tmt-area");
 	const status = document.getElementById("status");
 	const userInfo = document.getElementById("user-info");
 	const submitBtn = document.getElementById("submit-btn");
+	const nextBtn = document.getElementById("next-btn");
 
-	// 처음 실행 시, 사용자에게 초기 설명을 보여주는 부분
-	const introScreen = document.getElementById("intro-screen");
-	const startTestBtn = document.getElementById("start-test-btn");
-	startTestBtn.onclick = () => {
-		// 초기 설명 모달 숨김
-		introScreen.style.display = "none";
-		// 사용자 정보 입력 팝업 표시
+	// 🔹 페이지 로딩 시 intro modal 표시
+	document.getElementById("intro-modal").style.display = "block";
+	document.getElementById("user-modal").style.display = "none";
+	document.getElementById("result-modal").style.display = "none";
+	
+	// 설명 팝업 → 사용자 정보 입력 팝업
+	nextBtn.onclick = () => {
+		document.getElementById("intro-modal").style.display = "none";
 		document.getElementById("user-modal").style.display = "block";
 	};
 
