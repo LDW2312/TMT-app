@@ -1,4 +1,4 @@
-const sequence = ["1", "A", "2", "B", "3", "C", "4", "D", "5", "E", "6", "F", "7", "G", "8", "H", "9", "I", "10", "J"];
+const sequence = ["1", "A", "2", "B", "3", "C", "4", "D", "5", "E", "6", "F", "7", "G", "8", "H", "9", "I", "10", "J", "11", "K", "12", "L", "13"];
 let shuffled = [], current = 0, startTime = null, errors = 0;
 let reactionStart = null, reactionTime = null, reactionTriggered = false, reactionActive = false;
 let userName = "", userPhone = "";
@@ -103,12 +103,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function interpretResult(age, timeTaken) {
 		const ageRanges = [
-			{ min: 20, max: 29, avg: 59.03, std: 18.97 },
-			{ min: 30, max: 39, avg: 62.11, std: 17.73 },
-			{ min: 40, max: 49, avg: 71.75, std: 20.52 },
-			{ min: 50, max: 59, avg: 79.23, std: 25.31 },
-			{ min: 60, max: 69, avg: 94.28, std: 30.25 },
-			{ min: 70, max: 79, avg: 110.73, std: 33.12 }
+			{ min: 18, max: 24, avg: 48.0, std: 11.0 },
+			{ min: 25, max: 34, avg: 52.0, std: 12.0 },
+			{ min: 35, max: 44, avg: 58.0, std: 13.5 },
+			{ min: 45, max: 54, avg: 65.0, std: 15.0 },
+			{ min: 55, max: 59, avg: 70.0, std: 17.0 },
+			{ min: 60, max: 64, avg: 75.0, std: 19.0 },
+			{ min: 65, max: 69, avg: 82.0, std: 21.0 },
+			{ min: 70, max: 74, avg: 90.0, std: 23.0 },
+			{ min: 75, max: 79, avg: 105.0, std: 28.0 }
 		];
 
 		const match = ageRanges.find(r => age >= r.min && age <= r.max);
@@ -146,11 +149,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			current++;
 			correctClicks++;
 
-			if (!reactionTriggered && ["A", "2", "B", "3", "C", "4", "D", "5", "E", "6", "F", "7", "G", "8", "H", "9", "I", "10"].includes(value)) {
-				let prob = 0.01;
-				if (current >= sequence.length / 3) prob = 0.1;
-				if (current >= sequence.length / 2) prob = 0.33;
-				if (value === "I") prob = 1.0;
+			if (!reactionTriggered && ["A", "2", "B", "3", "C", "4", "D", "5", "E", "6", "F", "7", "G", "8", "H", "9", "I", "10", "J", "11", "K", "12"].includes(value)) {
+				let prob = 0.005;
+				if (current >= sequence.length / 3) prob = 0.05;
+				if (current >= sequence.length / 2) prob = 0.15;
+				if (value === "12") prob = 1.0;
 				if (Math.random() < prob) {
 					reactionTriggered = true;
 					reactionTriggerIndex = current;
