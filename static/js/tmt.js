@@ -38,6 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		status.innerText = "";
 		shuffled = sequence.slice().sort(() => Math.random() - 0.5);
 		area.innerHTML = "";
+		const subtitle = document.getElementById("subtitle");
+		subtitle.innerText = "Trail Making Test (Part B)";
+		subtitle.style.color = "#777";
+		subtitle.style.fontSize = "0.9em";
+		subtitle.style.fontWeight = "normal";
+		subtitle.style.backgroundColor = "transparent";
+		subtitle.style.padding = "0";
+		subtitle.style.borderRadius = "0";
 		renderButtons();
 	}
 
@@ -125,7 +133,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			if (current === sequence.length) {
 				const timeTaken = ((Date.now() - startTime) / 1000).toFixed(2);
-				status.innerText = `✅ 완료! 시간: ${timeTaken}초 / 오류: ${errors}회 \n반응속도: ${reactionTime || '미응답'}ms`;
+				
+				// 기존 하단 상태 메시지 제거
+				status.innerText = "";
+
+				// 부제목 위치에 한 줄 결과 표시
+				const subtitle = document.getElementById("subtitle");
+				subtitle.innerText = `✅ 완료! 시간: ${time}초 / 오류: ${errors}회 / 반응속도: ${reactionTime || '미응답'}ms`;
+				subtitle.style.color = "#1976d2";  // 파란색 강조
+				subtitle.style.fontSize = "1.2em";
+				subtitle.style.fontWeight = "bold";
+				subtitle.style.backgroundColor = "#e3f2fd";  // 연한 배경
+				subtitle.style.padding = "6px";
+				subtitle.style.borderRadius = "6px";
+
 				sendResult(timeTaken);
 			}
 		}
