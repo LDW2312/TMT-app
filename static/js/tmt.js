@@ -5,16 +5,25 @@ let userName = "", userPhone = "";
 let clickLog = [], correctClicks = 0, reactionTriggerIndex = null, userAge = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+	const introModal = document.getElementById("intro-modal");
+	const userModal = document.getElementById("user-modal");
+	const resultModal = document.getElementById("result-modal");
+
 	const area = document.getElementById("tmt-area");
 	const status = document.getElementById("status");
 	const userInfo = document.getElementById("user-info");
 	const submitBtn = document.getElementById("submit-btn");
 	const nextBtn = document.getElementById("next-btn");
+
+	// 🔹 초기에 Intro 모달만 보이게
+	introModal.style.display = "block";
+	userModal.style.display = "none";
+	resultModal.style.display = "none";
 	
 	// 설명 팝업 → 사용자 정보 입력 팝업
 	nextBtn.onclick = () => {
-		document.getElementById("intro-modal").style.display = "none";
-		document.getElementById("user-modal").style.display = "block";
+		introModal.style.display = "none";
+		userModal.style.display = "block";
 	};
 
 	// 사용자 정보 입력 후 테스트 시작
@@ -32,13 +41,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		// 사용자 정보 입력 팝업 숨김
 		document.getElementById("user-modal").style.display = "none";
 		userInfo.innerText = `👤 ${userName} / 🎂 ${userAge}세 / 📱 010-****-${phone}`;
+		
+		userModal.style.display = "none";
 		resetTest();
 	};
-
-	// 🔹 페이지 로딩 시 intro modal 표시
-	document.getElementById("intro-modal").style.display = "block";
-	document.getElementById("user-modal").style.display = "none";
-	document.getElementById("result-modal").style.display = "none";
 
 	function resetTest() {
 		area.style.backgroundColor = "white";
