@@ -63,3 +63,7 @@ def submit():
     data["completion_status"] = "completed"
     save_to_google_sheets(data)
     return jsonify({"status": "success"})
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
