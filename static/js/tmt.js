@@ -5,6 +5,10 @@ let userName = "", userPhone = "";
 let clickLog = [], correctClicks = 0, reactionTriggerIndex = null, userAge = null;
 
 document.addEventListener("DOMContentLoaded", () => {
+	document.getElementById("go-next-btn").onclick = () => {
+		document.getElementById("intro-section").style.display = "none";
+		document.getElementById("user-modal").style.display = "block";
+	};
 	const area = document.getElementById("tmt-area");
 	const status = document.getElementById("status");
 	const userInfo = document.getElementById("user-info");
