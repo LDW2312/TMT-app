@@ -2,7 +2,7 @@ const sequence = ["1", "A", "2", "B", "3", "C", "4", "D", "5", "E", "6", "F", "7
 let shuffled = [], current = 0, startTime = null, errors = 0;
 let reactionStart = null, reactionTime = null, reactionTriggered = false, reactionActive = false;
 let userName = "", userPhone = "";
-let clickLog = [], correctClicks = 0, reactionTriggerIndex = null;
+let clickLog = [], correctClicks = 0, reactionTriggerIndex = null, userAge = null;
 
 document.addEventListener("DOMContentLoaded", () => {
 	const area = document.getElementById("tmt-area");
@@ -13,11 +13,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	submitBtn.onclick = () => {
 		const name = document.getElementById("name-input").value.trim();
 		const phone = document.getElementById("phone-input").value.trim();
-		if (!name || !phone || phone.length !== 4) {
-			alert("이름과 전화번호 끝 4자리를 정확히 입력해주세요.");
-			return;
-		}
+		const age = parseInt(document.getElementById("age-input").value.trim());
+		if (!name || !phone || phone.length !== 4 || isNaN(age)) {
+		alert("이름, 나이, 전화번호를 모두 정확히 입력해주세요.");
+		return;
+	}
 		userName = name;
+		userAge = age;
 		userPhone = `#${phone.padStart(4, "0")}`;
 		document.getElementById("user-modal").style.display = "none";
 		userInfo.innerText = `👤 ${userName} / 📱 010-****-${phone}`;
@@ -99,6 +101,31 @@ document.addEventListener("DOMContentLoaded", () => {
 		status.innerText = "🟥돌발!! 빨간 화면을 클릭해주세요!";
 	}
 
+	function interpretResult(age, timeTaken) {
+		const ageRanges = [
+			{ min: 20, max: 29, avg: 59.03, std: 18.97 },
+			{ min: 30, max: 39, avg: 62.11, std: 17.73 },
+			{ min: 40, max: 49, avg: 71.75, std: 20.52 },
+			{ min: 50, max: 59, avg: 79.23, std: 25.31 },
+			{ min: 60, max: 69, avg: 94.28, std: 30.25 },
+			{ min: 70, max: 79, avg: 110.73, std: 33.12 }
+		];
+
+		const match = ageRanges.find(r => age >= r.min && age <= r.max);
+		if (!match) return "⚠️ 기준 연령대 정보 없음";
+
+		const threshold = match.avg + 1.5 * match.std;
+		let result = "";
+		if (timeTaken <= match.avg) result = "🎉 매우 우수한 수행입니다!";
+		else if (timeTaken <= threshold) result = "✅ 정상 범위 내 수행입니다.";
+		else result = "⚠️ 수행 시간이 길어 주의가 필요합니다.";
+
+		return `🧠 연령대: ${match.min}~${match.max}세 기준  
+	🕒 수행 시간: ${timeTaken.toFixed(1)}초  
+	📊 기준 평균: ${match.avg.toFixed(1)}초 / 허용 상한: ${threshold.toFixed(1)}초  
+	${result}`;
+	}
+
 	function handleClick(value, btn) {
 		const clickTime = performance.now();
 		const isCorrect = (value.trim() === sequence[current]);
@@ -148,6 +175,15 @@ document.addEventListener("DOMContentLoaded", () => {
 				subtitle.style.borderRadius = "6px";
 
 				sendResult(timeTaken);
+
+				const interpretation = interpretResult(userAge, timeTaken);
+
+				status.innerText = interpretation;
+				status.style.color = "#336699";  // 진한 파랑 계열 강조
+				status.style.fontWeight = "bold";
+				status.style.whiteSpace = "pre-line"; // 줄바꿈 허용
+
+				sendResult(timeTaken.toFixed(2));
 			}
 		}
 	}
@@ -185,10 +221,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		const validTotalClicks = clickLog.length - reactionBackgroundClicks;
 
+		function toKSTISOString() {
+			const kst = new Date(Date.now() + 9 * 60 * 60 * 1000); // KST = UTC+9
+			return kst.toISOString().replace("T", " ").slice(0, 19); // "YYYY-MM-DD HH:MM:SS"
+		}
+
 		const payload = {
 			name: userName,
 			phone: `${userPhone.padStart(4, "0")}`,
-			timestamp: new Date().toISOString(),
+			timestamp: toKSTISOString(),
 			time_taken: time,
 			error_count: errors,
 			reaction_time: reactionTime || "미응답",

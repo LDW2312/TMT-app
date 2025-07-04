@@ -9,14 +9,6 @@ import gspread
 app = Flask(__name__)
 CORS(app)
 
-DATA_FILE = "results.csv"
-FIELDNAMES = [
-    "timestamp", "name", "phone", "time_taken", "error_count", "reaction_time",
-    "total_clicks", "accuracy", "first_click_time", "reaction_trigger_step",
-    "reaction_success", "total_buttons", "first_error_position",
-    "device_type", "screen_resolution", "completion_status", "test_type", "click_log"
-]
-
 def save_to_google_sheets(data):
     # Render 환경에서는 credentials.json 내용을 환경변수에서 가져오도록 설정
     service_account_info = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT"])
@@ -37,6 +29,7 @@ def save_to_google_sheets(data):
         data["timestamp"],
         data["name"],
         data["phone"],
+        data["age"],
         data["time_taken"],
         data["error_count"],
         data["reaction_time"],
