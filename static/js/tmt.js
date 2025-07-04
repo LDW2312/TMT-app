@@ -10,11 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	const userInfo = document.getElementById("user-info");
 	const submitBtn = document.getElementById("submit-btn");
 	const nextBtn = document.getElementById("next-btn");
-
-	// 🔹 페이지 로딩 시 intro modal 표시
-	document.getElementById("intro-modal").style.display = "block";
-	document.getElementById("user-modal").style.display = "none";
-	document.getElementById("result-modal").style.display = "none";
 	
 	// 설명 팝업 → 사용자 정보 입력 팝업
 	nextBtn.onclick = () => {
@@ -39,6 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
 		userInfo.innerText = `👤 ${userName} / 🎂 ${userAge}세 / 📱 010-****-${phone}`;
 		resetTest();
 	};
+
+	// 🔹 페이지 로딩 시 intro modal 표시
+	document.getElementById("intro-modal").style.display = "block";
+	document.getElementById("user-modal").style.display = "none";
+	document.getElementById("result-modal").style.display = "none";
 
 	function resetTest() {
 		area.style.backgroundColor = "white";
