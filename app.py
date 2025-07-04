@@ -27,7 +27,10 @@ def save_to_google_sheets(data):
     )
     
     gc = gspread.authorize(creds)
-    sh = gc.open("TMT_B_Results")  # 시트 이름
+    
+    # 시트 ID 방식으로 열기
+    spreadsheet_id = "1c1ft2raUG3fsrV2mZx1UJ4vlumQHxn2dWw9tmvvWDkw"
+    sh = gc.open_by_key(spreadsheet_id)
     worksheet = sh.sheet1
 
     worksheet.append_row([
