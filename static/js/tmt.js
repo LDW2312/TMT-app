@@ -161,19 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			if (current === sequence.length) {
 				const timeTaken = ((Date.now() - startTime) / 1000).toFixed(2);
 				
-				// 기존 하단 상태 메시지 제거
-				status.innerText = "";
-
-				// 부제목 위치에 한 줄 결과 표시
-				const subtitle = document.getElementById("subtitle");
-				subtitle.innerText = `✅ 완료! 시간: ${timeTaken}초 / 오류: ${errors}회 / 반응속도: ${reactionTime || '미응답'}ms`;
-				subtitle.style.color = "#1976d2";  // 파란색 강조
-				subtitle.style.fontSize = "1.2em";
-				subtitle.style.fontWeight = "bold";
-				subtitle.style.backgroundColor = "#e3f2fd";  // 연한 배경
-				subtitle.style.padding = "6px";
-				subtitle.style.borderRadius = "6px";
-
 				// 결과 해석
 				const interpretation = interpretResult(userAge, parseFloat(timeTaken));
 
@@ -227,6 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		const payload = {
 			name: userName,
 			phone: `${userPhone.padStart(4, "0")}`,
+			age: userAge,
 			timestamp: toKSTISOString(),
 			time_taken: time,
 			error_count: errors,
