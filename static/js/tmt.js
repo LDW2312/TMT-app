@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			body: JSON.stringify(payload)
 		})
 	}
-	document.getElementById("close-result-btn").onclick = () => {
-		location.reload();  // 페이지 새로고침으로 테스트 초기화
-	};
+	// document.getElementById("close-result-btn").onclick = () => {
+	// 	location.reload();  // 페이지 새로고침으로 테스트 초기화
+	// };
 });
